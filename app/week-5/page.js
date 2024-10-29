@@ -2,7 +2,7 @@
 
 import Counter from "./new-item";
 
-export default function CounterPage(){
+export default function Page(){
 
     return(
         <main>
