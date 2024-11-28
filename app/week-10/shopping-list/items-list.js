@@ -5,7 +5,7 @@ export default function ItemList({ items, onItemSelect }) {
     
     const [sortBy, setSortBy] = useState("name");
 
-    const sortedItems = [...items].sort((a, b) => {
+    const sortedItems = (items || []).slice().sort((a, b) => {
         if (sortBy === "name") {
             return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
         } else if (sortBy === "category") {

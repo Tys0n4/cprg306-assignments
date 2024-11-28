@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ItemList from "./items-list";
 import NewItemForm from "./new-item";
-import itemsData from "./item.json";
 import MealIdeasPage from "./meal-ideas"
+import { addItem, getItems } from "../_services/shopping-list-service";
+import { useUserAuth } from "../_utils/auth-context";
 
 export default function Page() {
 
-    const [items, setItems] = useState(itemsData);
+    const { user } = useUserAuth();
+    const [items, setItems] = useState([]);
     const [selectedItemName, setSelectedItemName] = useState('')
 
     const handleItemSelect = (item) => {
@@ -19,9 +21,32 @@ export default function Page() {
           setSelectedItemName(cleanedName);
     };
 
-    const handleAddItem = (addItems) => {
-        setItems([...items, addItems]);
+    const handleAddItem = async (addItems) => {
+        try {
+            const newItemId = await addItem(user.uid, addItems);
+            const savedItem = { id: newItemId, ...addItems };
+
+            setItems((prevItems) => [...(prevItems || []), savedItem]);
+            return setItems;
+        } catch (error) {
+            console.log(error);
+        }
     };
+
+    async function loadItems(user, setItems) {
+        try {
+            const fetchItems = await getItems(user.uid);
+            setItems(fetchItems);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if (user) {
+            loadItems(user, setItems);
+        }
+    }, [user]);
 
     return (
         <main className="flex justify-between p-4">

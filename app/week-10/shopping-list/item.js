@@ -9,7 +9,7 @@ export default function Item({name, quantity, category, onSelect}){
             rounded-lg 
             mb-4
             p-2
-            w-full flex-1" // Adjusted for full width and flex behavior
+            w-full flex-1"
             onClick={onSelect}
         >
             <li className="text-xl font-bold text-black">{name}</li>

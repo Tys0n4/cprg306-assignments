@@ -13,14 +13,14 @@ export default function SignInPage() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
     async function handleSignOut() {
         try {
             await firebaseSignOut();
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     console.dir(user);
 
@@ -33,8 +33,8 @@ export default function SignInPage() {
             </header>
             {user ? (
                 <div className="flex flex-col items-center space-y-4">
-                    <p>Welcome {user.displayName}</p>
-                    <Link href="/week-9/shopping-list">
+                    <p>Select one of the following</p>
+                    <Link href="/week-10/shopping-list">
                         <span className={buttonStyles}>Shopping List</span>
                     </Link>
                     <button
